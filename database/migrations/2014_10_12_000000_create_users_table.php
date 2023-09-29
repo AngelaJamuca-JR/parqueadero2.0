@@ -12,13 +12,37 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->id('idUsuario');
+            $table->string('nombre', 50);
+            $table->string('telefono', 20);
+            $table->string('apellido', 50);
+            //$table->rememberToken();
             $table->timestamps();
+
+
+
+            //Rferencia a la otra tabla  del mismo tipo (integer)
+            $table->integer('tipousuario_id');
+            $table->integer('vehiculo_id');
+
+            //Restricciones de la llave foranea 
+            $table->foreign('tipousuario_id')
+                  ->references('idTipousuario')
+                  -> on('tipousuarios')
+                    // Set null significa: que si se borran o se actualizan datos el campo quede en null
+                  ->onDelete('cascade');
+
+            //Restricciones de la llave foranea 
+            $table->foreign('vehiculo_id')
+            ->references('idVehiculo')
+            -> on('vehiculos')
+              // Set null significa: que si se borran o se actualizan datos el campo quede en null
+            ->onDelete('cascade');
+
+
+
+
+
         });
     }
 

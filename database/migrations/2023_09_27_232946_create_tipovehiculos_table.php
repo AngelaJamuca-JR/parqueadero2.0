@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('marcas', function (Blueprint $table) {
-            $table->id('idMarca');
-            $table->string('marca', 45);
+        Schema::create('tipovehiculos', function (Blueprint $table) {
+            $table->id('idTipovehiculo');
+            $table->string('tipo', 45);
+            $table->double('valorHora');
             $table->timestamps();
+
 
 
             $table->unsignedBigInteger('vehiculo_id')-> unique();
@@ -25,8 +27,6 @@ return new class extends Migration
             -> on('vehiculos')
                // Set null significa: que si se borran o se actualizan datos el campo quede en null
             ->onDelete('cascade');
-
-
         });
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('marcas');
+        Schema::dropIfExists('tipovehiculos');
     }
 };

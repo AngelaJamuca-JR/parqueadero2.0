@@ -12,8 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('facturas', function (Blueprint $table) {
-            $table->id();
+            $table->id('idfactura');
+            $table->dateTime('horaEntrada');
+            $table->dateTime('horaSalida');
+            $table->double('valor');
             $table->timestamps();
+
+
+
+
+            
+            //Referencia a la otra tabla  del mismo tipo (integer)
+            $table->unsignedBigInteger('vehiculo_id')-> unique();
+
+            //Restricciones de la llave foranea 
+            $table->foreign('vehiculo_id')
+                  ->references('idVehiculo')
+                  -> on('vehiculos')
+                    // Cascada significa: que si se borran o se actualizan datos hayan cambios en las dos tablas 
+                  ->onDelete('cascade')
+                  ->onUpdate('cascade');
+
+
         });
     }
 
